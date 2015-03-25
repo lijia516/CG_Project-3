@@ -174,7 +174,7 @@ float3 NormalMap::computeNormal(int i, int j, float scale)
     pos = (((j - 1) % height) * width + i);
     double Ha = (image[pos] + image[pos+1] + image[pos+2]) * 1.0 / 3.0;
     
-    normal = float3((Hr - Hg) / 255.0 * scale, (Hg - Ha) / 255.0 *scale, 1);
+    normal = float3((Hr - Hg) / 255.0 * scale, (Ha - Hg) / 255.0 *scale, 1);
     return normalize(normal);
 }
 
