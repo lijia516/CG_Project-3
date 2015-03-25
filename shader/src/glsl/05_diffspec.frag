@@ -26,14 +26,12 @@ void main()
     vec4 diffuse = kd * LMd;
     
     
-    
     vec4 specular = vec4(0,0,0,1);
+    vec3 halfAngleNormalized = normalize(halfAngle);
     
-    
-    if (lightDirectionNormalized[2] >= 0.0) {
+    if (lightDirectionNormalized[2] != 0.0 && halfAngleNormalized[2] > 0.0) {
         
-        vec3 halfAngleNormalized = normalize(halfAngle);
-        float ks = pow(max(halfAngleNormalized[2], 0.0), shininess);
+        float ks = clamp(pow(halfAngleNormalized[2], shininess), 0.0, 1.0);
         specular = ks * LMs;
     }
     

@@ -41,7 +41,7 @@ void main()
     float ks = clamp(pow(max(dot(halfAngleNormalized, normal), 0.0), shininess), 0.0, 1.0);
     vec4  specular = ks * LMs;
     
-    if (dot(lightDirectionNormalized, normal) < 0.0) {
+    if (dot(lightDirectionNormalized, normal) == 0.0 || dot(halfAngleNormalized, normal) < 0.0) {
         
         specular = vec4(0,0,0,1);
     }
@@ -49,5 +49,5 @@ void main()
     vec4 textColor = texture2D(decal, normalMapTexCoord);
     vec4 reflectColor = textureCube(envmap, reflectVector);
     
-    gl_FragColor = (ambient + diffuse * textColor) * 0.5 + specular * 0.5 + reflectColor * 0.6;
+    gl_FragColor = ((ambient + diffuse * textColor) * 0.5 + specular * 0.5 + reflectColor * 0.6);
 }

@@ -20,14 +20,19 @@ varying vec3 c0, c1, c2;
 void main()
 {
     
-    if (lightDirection[2] < 0.0 ) {
+    vec3 halfAngleNormalized = normalize(halfAngle);
+    
+    if (lightDirection[2] == 0.0 ) {
         
         gl_FragColor = vec4(0,0,0,1);
         
-    } else {
+    } else if(halfAngleNormalized[2] < 0.0) {
         
-        vec3 halfAngleNormalized = normalize(halfAngle);
-        float ks = pow(max(halfAngleNormalized[2], 0.0), shininess);
+        gl_FragColor = vec4(0,0,0,1);
+    
+    } else{
+        
+        float ks = pow(halfAngleNormalized[2], shininess);
         vec4 specular = clamp(ks * LMs, 0.0, 1.0);
         gl_FragColor = specular;
         

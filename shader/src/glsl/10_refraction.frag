@@ -21,26 +21,14 @@ varying mat3 inverseMatrix;
 void main()
 {
     
-    vec3 lightDirectionNormalized = normalize(lightDirection);
+    vec3 I = normalize(eyeDirection);
     
-    vec3 normal = texture2D(normalMap, normalMapTexCoord).rgb * 2.0 - 1.0;
+    vec3 refractVector = normalize(refract(-I, vec3(0.0, 0.0, 1.0), 1.1));
     
-    normal = normalize (vec3(0, 0, 1) + normal);
+    refractVector = inverseMatrix * refractVector;
     
-    float kd = clamp(dot(lightDirectionNormalized, normal), 0.0, 1.0);
-    vec4 diffuse = kd * LMd;
+    refractVector = objectToWorld * refractVector;
     
-    vec4 ambient = LMa;
-    
-    
-    if (lightDirectionNormalized[2] < 0.0) {
-        
-        gl_FragColor = vec4(0,0,0,1);
-        
-    } else {
-        
-        gl_FragColor = ambient + diffuse;
-    }
-    
+    gl_FragColor = textureCube(envmap, refractVector);
     
 }

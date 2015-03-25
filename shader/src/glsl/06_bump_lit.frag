@@ -38,7 +38,7 @@ void main()
     float ks = clamp(pow(max(dot(halfAngleNormalized, normal), 0.0), shininess), 0.0, 1.0);
     vec4  specular = ks * LMs;
     
-    if (dot(lightDirectionNormalized, normal) < 0.0) {
+    if (dot(lightDirectionNormalized, normal) == 0.0 || dot(halfAngleNormalized, normal) < 0.0) {
         
         specular = vec4(0,0,0,1);
     }
