@@ -46,8 +46,9 @@ void main()
         specular = vec4(0,0,0,1);
     }
     
-    vec4 textColor = texture2D(decal, normalMapTexCoord);
+  
     vec4 reflectColor = textureCube(envmap, reflectVector);
+    vec4 textColor = (0.5 * diffuse + 0.2 * reflectColor) * texture2D(decal, normalMapTexCoord);
     
-    gl_FragColor = ((ambient + diffuse * textColor) * 0.5 + specular * 0.5 + reflectColor * 0.6);
+    gl_FragColor = ambient * 0.5 + specular * 0.5 + reflectColor * 0.6 + textColor;
 }

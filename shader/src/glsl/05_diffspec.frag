@@ -22,7 +22,7 @@ void main()
     vec4 ambient = LMa;
     
     vec3 lightDirectionNormalized = normalize(lightDirection);
-    float kd = max(lightDirectionNormalized[2], 0.0);
+    float kd = clamp(lightDirectionNormalized[2], 0.0, 1.0);
     vec4 diffuse = kd * LMd;
     
     
